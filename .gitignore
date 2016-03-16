@@ -1,0 +1,49 @@
+##TRABAJO EN CLASE DE SERIES DE TIEMPO CON SERGIO :
+  #### Generar 4 objetos con datos aleatorios y que tengan 60 datos
+  ### dato 1 de n?mero de profesionista (mill)rango de 5 a 8
+  ### dato 2 crec pib rango de 0 a 5
+  ### dato 3 porcentaje de ocupados rango de 40 a 60
+  ### dato 4 porcentaje de desocupados rango de 3 a 8
+  #### 1) una vez que generen los datos hacer un data frame de los 4 objetos
+  #### 2) mostrar en consola los primeros 12 y ultimos 12 datos
+  #### 3) convertir los objetos en series de tiempo desde el data frame comezando en 2010 y son datos mensuales
+  #### 4) graficar los profesionistas y ocupados en la misma imagen
+  #### 5) graficar pib y desocupados en la misma imagen
+  #### 6) graficar todas juntas
+### 7) creaR serie de tiempo multiple!!!!8
+#### 8 ) graficar serie de tiempo multiple 
+#### 9 ) dividir serie de tiempo y graficar solo el ultimo año...
+#### 8 ) analizar las graficas ( si hay alguna tendencia o variacion estacional) (investigar)
+
+profesionista <- sample(5:8, 60, replace = TRUE)
+cpib <- sample(0:5, 60, replace = TRUE)
+porcentajeocup<- sample(40:60, 60, replace = TRUE)
+porcentajedesocup<- sample(3:8, 60, replace = TRUE)
+data <- data.frame(profesionista,cpib,porcentajeocup,porcentajedesocup)
+data1 <-data [c(1:12,49:60),]
+serie<-ts(data [,4], start=2010, frequency =c(12))
+layout(1:2)
+plot(profesionista,main = "profesionistas", xlab = "meses", ylab = "numero de personas", col="salmon")
+plot(porcentajeocup,main = "ocupados", xlab = "meses", ylab = "numero de personas", col="salmon")
+layout(1:2)
+plot(aggregate(porcentajeocup))
+plot(porcentajeocup,main = "cpib", xlab = "meses", ylab = "porcentaje", col="salmon")
+plot(porcentajedesocup,main = "desocupados", xlab = "meses", ylab = "porcentaje", col="salmon")
+layout(1:4)
+plot(profesionista,main = "profesionistas", xlab = "meses", ylab = "numero de personas", col="salmon")
+plot(porcentajeocup,main = "ocupados", xlab = "meses", ylab = "numero de personas", col="salmon")
+plot(porcentajeocup,main = "cpib", xlab = "meses", ylab = "porcentaje", col="salmon")
+plot(porcentajedesocup,main = "desocupados", xlab = "meses", ylab = "porcentaje", col="salmon")
+
+prof<-ts(profesionista , start=2010, frequency = 12)
+cp<-ts(cpib, start = 2010, frequency = 12)
+pocup<-(porcentajeocup, start = 2010, frequency = 12)
+pdesocup<-(porcentajedesocup, start = 2010, frequency = 12)
+
+seriemultiple <- ts.intersect(prof,cp,pocup,pdesocup)
+seriemultipledata<-window(seriemultiple, start=c(2014,1), end=c(2014,12))
+
+plot(seriemultiple,main = "año 2014", xlab = "meses", ylab = "numero de personas", col="salmon")
+
+
+##no tiene variacion estacional debido a que los numeros fueron generados aleatoriamente
